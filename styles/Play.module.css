@@ -1,0 +1,213 @@
+.playContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 70%;
+  place-items: center;
+}
+.showAlbum {
+  background-color: var(--colorOne);
+  padding: 1rem;
+  max-width: 90%;
+}
+.answer {
+  margin: 0;
+  background-color: var(--colorFour);
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+.answerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.playStaticContainer {
+  width: 100%;
+  height: 100vh;
+  background: var(--colorFive);
+  display: flex;
+  flex-direction: column !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trackContainer {
+  background: var(--colorFour);
+  border-radius: 1rem;
+}
+
+.endTrackContainer {
+  margin: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 600px;
+  border-radius: 0.5rem;
+}
+.endTrackContainer:hover {
+  background: var(--colorFive);
+}
+.endBtnContainer {
+  padding: 0.5rem 0 1.5rem 0;
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.endScreenStaticContainer {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--colorFive);
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+}
+
+.spotifyLink:hover {
+  border-bottom: 1px solid black;
+}
+.trackSubContainer {
+  margin: 0;
+  margin-top: 0.5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.bottomContainer {
+  min-width: 100%;
+}
+
+.bar {
+  border: 2px solid #000;
+  height: 20px;
+  width: 100%;
+}
+.bar .in {
+  animation: fill 10s linear 1;
+  height: 100%;
+  background-color: var(--colorSeven);
+}
+
+.playImgContainer {
+  display: flex;
+  height: 225px;
+  margin: 1rem 0;
+  align-items: center;
+  padding: 1rem;
+  background: var(--colorFour);
+  border-radius: 1rem;
+}
+
+@keyframes fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+.playBtn {
+  top: 0;
+  left: 0;
+  transition: all 0.15s linear 0s;
+  position: relative;
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: var(--colorSix);
+  text-transform: uppercase;
+  color: #404040;
+  font-family: arial;
+  letter-spacing: 1px;
+  box-shadow: -6px 6px 0 #404040;
+  text-decoration: none;
+  border: 2px #000 solid;
+  user-select: none;
+  width: 70%;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  text-align: center;
+}
+.playBtn:hover {
+  top: 3px;
+  left: -3px;
+  box-shadow: -3px 3px 0 #404040;
+}
+.playBtn:hover::after {
+  top: 1px;
+  left: -2px;
+  width: 4px;
+  height: 4px;
+}
+.playBtn:hover::before {
+  bottom: -2px;
+  right: 1px;
+  width: 4px;
+  height: 4px;
+}
+.playBtn::after {
+  transition: all 0.15s linear 0s;
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background-color: #404040;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+.playBtn::before {
+  transition: all 0.15s linear 0s;
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background-color: #404040;
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+div.playBtn {
+  position: relative;
+}
+
+div:active.playBtn {
+  top: 6px;
+  left: -6px;
+  box-shadow: none;
+}
+div:active.playBtn:before {
+  bottom: 1px;
+  right: 1px;
+}
+div:active.playBtn:after {
+  top: 1px;
+  left: 1px;
+}
+
+.displayNone {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  visibility: hidden;
+}
+
+.homeArrowContainer {
+  margin-top: 0.6rem;
+  position: absolute;
+  left: 20px;
+  top: 0px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+
+.homeArrowContainer:hover .displayNone {
+  visibility: visible;
+}
