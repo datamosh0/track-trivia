@@ -21,8 +21,14 @@
   border: 1px #000 solid;
 }
 .thumbnailImg {
-  width: 150px;
+  width: 200px;
+  height: 200px;
   min-width: 100px;
+}
+.thumbnailContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .imgContainer {
   display: flex;

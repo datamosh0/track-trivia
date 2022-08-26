@@ -17,7 +17,7 @@ const Play = () => {
   const [thumbnailImg, setThumbnailImg] = useState<string>("");
   const [scoreArr, setScoreArr] = useState<number[]>([]);
   const [score, setScore] = useState<number>(0);
-  const [scoreAvg, setScoreAvg] = useState<number>();
+  const [scoreAvg, setScoreAvg] = useState<number | string>();
   const [playedTimes, setPlayedTimes] = useState<number>();
   const router = useRouter();
   const { playID } = router.query;
@@ -55,10 +55,11 @@ const Play = () => {
         if (id === playID) tempArtistName = name;
       });
       const tempThumbnailImg = await import(
-        `../../assets/${tempArtistName}.jpg`
+        `../../assets/thumbnails/${playID}.jpg`
       );
       setArtistName(tempArtistName);
       setThumbnailImg(tempThumbnailImg.default.src);
+
       const { data } = await supabase.from(`${playID}`).select("score");
       const tempPlayedTimes = Object.entries(data).length;
       const tempScoreAvg =
@@ -67,8 +68,8 @@ const Play = () => {
             return value.score;
           })
           .reduce((partialSum, a) => partialSum + a, 0) / tempPlayedTimes;
-
-      setScoreAvg(tempScoreAvg);
+      const returnAvg = tempScoreAvg ? tempScoreAvg : "?";
+      setScoreAvg(returnAvg);
       setPlayedTimes(tempPlayedTimes);
     };
     firstCall();
@@ -77,6 +78,7 @@ const Play = () => {
     if (showScore === true) {
       const sendScore = async () => {
         const res = await supabase.from(`${playID}`).insert([{ score: score }]);
+        console.log(res);
       };
       sendScore();
     }
@@ -136,8 +138,7 @@ const Play = () => {
               </div>
               <div className={play.trackContainer}>
                 {trackData.map((track: TrackData, index: number) => {
-                  let correct = false;
-                  if (scoreArr[index]) correct = true;
+                  let correct = scoreArr[index] ? true : false;
                   return (
                     <div className={play.endTrackContainer}>
                       <h3 className={main.header1}>{track.name}</h3>

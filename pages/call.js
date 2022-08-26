@@ -4,8 +4,8 @@ import { setToken } from "../app/token";
 import store from "../app/store";
 
 export const getAccessToken = async () => {
-  var clientSecret = "7b2b980cca9e4c21b5b578721ecc2a91";
-  var clientId = "4894bbad8a0540dc9bd6689f06cc94bc";
+  var clientSecret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
+  var clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
   const headers = {
     headers: {
       Accept: "application/json",
@@ -32,7 +32,7 @@ export const getAccessToken = async () => {
   }
 };
 
-export const getTrackIds = async (songName, token) => {
+export const getTrackIds = async ({ songName, artistName }, token) => {
   try {
     const headers = {
       Accept: "application/json",
@@ -41,7 +41,26 @@ export const getTrackIds = async (songName, token) => {
       Authorization: `Bearer ${token}`,
     };
     const { data } = await axios.get(
-      `https://api.spotify.com/v1/search?q=track:${songName}+artist:Kanye&type=track`,
+      `https://api.spotify.com/v1/search?q=track:${songName}+artist:${artistName}&type=track`,
+      { headers }
+    );
+    if (data === undefined) return;
+    return data;
+  } catch (err) {
+    return err.response.status;
+  }
+};
+
+export const getPlaylistTracks = async (playlistID, token) => {
+  try {
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      // token stored as global variable
+      Authorization: `Bearer ${token}`,
+    };
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
       { headers }
     );
     return data;

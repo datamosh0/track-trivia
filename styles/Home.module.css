@@ -84,12 +84,14 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
+  cursor: pointer;
+  width: 225px;
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  border-color: var(--colorFour);
+  border-color: #3301d5;
 }
 
 .card h2 {

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { getTracksData, wrapInRetry } from "../../call";
 import { useEffect } from "react";
 import { supabase } from "../../../supabaseClient";
-import main from "../../../styles/Main.module.css";
+import main from "../../../styles/main.module.css";
 import nameId from "../../../JSON/nameId.json";
 import { useDispatch } from "react-redux";
 import { setTrackData, setTracksImport } from "../../../app/trackData";
@@ -74,9 +74,11 @@ const queryID = () => {
         Object.entries(nameId).forEach(([name, id]) => {
           if (id === queryID) tempArtistName = name;
         });
-        const tempTracksImport = await import(`../../../JSON/${queryID}.json`);
+        const tempTracksImport = await import(
+          `../../../JSON/trackIDtoName/${queryID}.json`
+        );
         const tempThumbnailImg = await import(
-          `../../../assets/${tempArtistName}.jpg`
+          `../../../assets/thumbnails/${queryID}.jpg`
         );
 
         setThumbnailImg(tempThumbnailImg.default.src);
