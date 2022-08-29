@@ -5,7 +5,7 @@ import {
   getPlaylistTracks,
   getTrackIds,
   wrapInRetry,
-} from "../pages/call";
+} from "./call";
 import { supabase } from "../supabaseClient";
 
 const MyUtil = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { getTracksData, wrapInRetry } from "../../call";
+import { getTracksData, wrapInRetry } from "../../../components/call";
 import { useEffect } from "react";
 import { supabase } from "../../../supabaseClient";
 import main from "../../../styles/Main.module.css";
