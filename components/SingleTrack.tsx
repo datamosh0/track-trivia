@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import play from "../styles/play.module.css";
+import play from "../stlyes/Play.module.css";
 import Visualizer from "./Visualizer";
 import { shuffle } from "../pages/call";
-import main from "../styles/main.module.css";
+import main from "../stlyes/Main.module.css";
 import cancelGame from "../assets/cancelGame.svg";
 import { useRouter } from "next/router";
 

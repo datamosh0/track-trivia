@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import MyUtil from "../components/myUtil";
-import main from "../styles/main.module.css";
+import main from "../stlyes/Main.module.css";
 import nameId from "../JSON/nameId.json";
 
 const Home: NextPage = () => {
