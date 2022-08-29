@@ -3,12 +3,12 @@ import { useRouter } from "next/router";
 import { getTracksData, wrapInRetry } from "../../call";
 import { useEffect } from "react";
 import { supabase } from "../../../supabaseClient";
-import main from "../../../styles/main.module.css";
+import main from "../../../styles/Main.module.css";
 import nameId from "../../../JSON/nameId.json";
 import { useDispatch } from "react-redux";
 import { setTrackData, setTracksImport } from "../../../app/trackData";
 import leftArrow from "../../../assets/leftArrow.svg";
-import play from "../../../styles/play.module.css";
+import play from "../../../styles/Play.module.css";
 
 const QueryID = () => {
   const dispatch = useDispatch();
