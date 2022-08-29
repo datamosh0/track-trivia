@@ -140,11 +140,12 @@ const Play = () => {
                 {trackData.map((track: TrackData, index: number) => {
                   let correct = scoreArr[index] ? true : false;
                   return (
-                    <div className={play.endTrackContainer}>
+                    <div className={play.endTrackContainer} key={track.name}>
                       <h3 className={main.header1}>{track.name}</h3>
                       <h4 className={`${play.trackSubContainer}`}>
                         <a
                           target="_blank"
+                          rel="noreferrer"
                           href={track.spotify}
                           className={play.spotifyLink}
                         >
