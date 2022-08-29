@@ -10,7 +10,7 @@ import { setTrackData, setTracksImport } from "../../../app/trackData";
 import leftArrow from "../../../assets/leftArrow.svg";
 import play from "../../../styles/play.module.css";
 
-const queryID = () => {
+const QueryID = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { queryID } = router.query;
@@ -162,4 +162,4 @@ const queryID = () => {
   );
 };
 
-export default queryID;
+export default QueryID;

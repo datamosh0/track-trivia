@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import play from "../styles/play.module.css";
-const visualizer = ({ trackURL, showAnswer }) => {
+const Visualizer = ({ trackURL, showAnswer }) => {
   const canvasRef = useRef();
   const audioRef = useRef();
   const [localContext, setLocalContext] = useState<any>();
@@ -106,4 +106,4 @@ const visualizer = ({ trackURL, showAnswer }) => {
   );
 };
 
-export default visualizer;
+export default Visualizer;

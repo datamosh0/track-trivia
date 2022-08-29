@@ -8,7 +8,7 @@ import {
 } from "../pages/call";
 import { supabase } from "../supabaseClient";
 
-const myUtil = () => {
+const MyUtil = () => {
   const artistsObj = {
     "1dBC3Mxf8j9DINMUu8yKqx": "Kendrick Lamar",
   };
@@ -93,6 +93,6 @@ const myUtil = () => {
     // makeJson();
   }, []);
 
-  return <div>myUtil</div>;
+  return <div>MyUtil</div>;
 };
-export default myUtil;
+export default MyUtil;
