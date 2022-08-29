@@ -7,7 +7,6 @@ import main from "../styles/main.module.css";
 import nameId from "../JSON/nameId.json";
 
 const Home: NextPage = () => {
-  console.log(nameId);
   return (
     <div className={styles.container}>
       <Head>
@@ -25,6 +24,7 @@ const Home: NextPage = () => {
             const thumbnail = require(`../assets/thumbnails/${id}.jpg`);
             return (
               <Link
+                key={id}
                 href={`/start/${encodeURIComponent(
                   "artists"
                 )}/${encodeURIComponent(id)}`}
