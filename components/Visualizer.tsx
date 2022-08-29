@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import play from "../stlyes/Play.module.css";
+import play from "../styles/Play.module.css";
 const Visualizer = ({ trackURL, showAnswer }) => {
   const canvasRef = useRef();
   const audioRef = useRef();

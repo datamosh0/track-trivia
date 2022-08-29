@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import play from "../../stlyes/Play.module.css";
+import play from "../../styles/Play.module.css";
 import { useRouter } from "next/router";
 import SingleTrack from "../../components/SingleTrack";
 import { useSelector } from "react-redux";
 import { selectTrackData, selectTracksImport } from "../../app/trackData";
 import nameId from "../../JSON/nameId.json";
-import main from "../../stlyes/Main.module.css";
+import main from "../../styles/Main.module.css";
 import { supabase } from "../../supabaseClient";
 
 const Play = () => {
