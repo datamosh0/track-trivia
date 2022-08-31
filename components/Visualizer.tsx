@@ -1,12 +1,20 @@
 import { useRef, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectVolume } from "../app/trackData";
+import { setVolume } from "../app/trackData";
 import play from "../styles/Play.module.css";
 const Visualizer = ({ trackURL, showAnswer }) => {
+  const windowVolume = useSelector(selectVolume);
+  const dispatch = useDispatch();
   const canvasRef = useRef();
-  const audioRef = useRef();
+  const audioRef = useRef<any>();
+  const volumeRef = useRef<any>();
   const [localContext, setLocalContext] = useState<any>();
   const [localSource, setLocalSource] = useState<any>();
   const [localTimeout, setLocalTimeout] = useState<any>();
   const [localAudio, setLocalAudio] = useState<any>();
+  const [localVolume, setLocalVolume] = useState<number>(windowVolume);
+  const [showResetButton, setShowResetButton] = useState<boolean>();
   const loadVisual = () => {
     if (window !== undefined) {
       var canvas: any = canvasRef.current;
@@ -25,7 +33,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
       }
 
       var analyser = context.createAnalyser();
-
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight / 2.5;
       var ctx = canvas.getContext("2d");
@@ -69,17 +76,20 @@ const Visualizer = ({ trackURL, showAnswer }) => {
           x += barWidth + 1;
         }
       };
-
+      renderFrame();
+      audioRef.current.volume = localVolume;
       audio.play();
       let myTimeout = setTimeout(() => {
         audio.pause();
+        setShowResetButton(true);
       }, 10000);
-      renderFrame();
 
-      setLocalAudio(audio);
-      setLocalTimeout(myTimeout);
-      setLocalSource(src);
-      setLocalContext(context);
+      setTimeout(() => {
+        setLocalAudio(audio);
+        setLocalTimeout(myTimeout);
+        setLocalSource(src);
+        setLocalContext(context);
+      }, 50);
     }
   };
 
@@ -98,8 +108,50 @@ const Visualizer = ({ trackURL, showAnswer }) => {
     loadVisual();
   }, []);
 
+  const changeVolume = () => {
+    const newVolume = volumeRef!.current.value as number;
+    audioRef.current.volume = newVolume;
+    dispatch(setVolume(newVolume));
+    setLocalVolume(newVolume);
+  };
+
   return (
     <div>
+      {showResetButton && (
+        <div
+          style={{
+            marginTop: "1rem",
+            marginLeft: "7%",
+            position: "fixed",
+          }}
+        >
+          <div
+            className={play.playBtn}
+            style={{
+              width: "100px",
+              height: "50px",
+              fontSize: ".8rem",
+            }}
+            onClick={loadVisual}
+          >
+            listen again
+          </div>
+        </div>
+      )}
+      <div className={play.volumeInputContainer}>
+        <input
+          type="range"
+          id="volume"
+          min=".02"
+          max="1"
+          step=".01"
+          value={localVolume}
+          ref={volumeRef}
+          onChange={changeVolume}
+          className={play.volumeInput}
+        ></input>
+      </div>
+
       <canvas ref={canvasRef}></canvas>
       <audio ref={audioRef}></audio>
     </div>

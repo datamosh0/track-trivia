@@ -195,6 +195,14 @@
   z-index: -1;
 }
 
+.volumeInputContainer {
+  right: 6%;
+  margin-top: 1rem;
+  position: absolute;
+}
+.volumeInput {
+  float: right;
+}
 div.playBtn {
   position: relative;
 }
