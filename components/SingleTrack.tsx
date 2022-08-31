@@ -121,9 +121,6 @@ const SingleTrack = ({
               trackURL={thisTrack.publicURL}
               showAnswer={showAnswer}
             ></Visualizer>
-            <div className={play.bar}>
-              <div className={play.in}></div>
-            </div>
           </div>
         </div>
       ) : (

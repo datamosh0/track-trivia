@@ -105,6 +105,11 @@ const Visualizer = ({ trackURL, showAnswer }) => {
     }
   }, [showAnswer]);
 
+  const startMobile = () => {
+    localContext.resume();
+    loadVisual();
+  };
+
   useEffect(() => {
     loadVisual();
   }, []);
@@ -153,11 +158,21 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         ></input>
       </div>
 
-      {suspended && (
-        <div onClick={() => localContext.resume()}>audio suspended</div>
+      {suspended ? (
+        <div onClick={startMobile} className={play.playBtn}>
+          listen
+        </div>
+      ) : (
+        <div>
+          <div>
+            <canvas ref={canvasRef}></canvas>
+            <audio ref={audioRef}></audio>
+          </div>
+          <div className={play.bar}>
+            <div className={play.in}></div>
+          </div>
+        </div>
       )}
-      <canvas ref={canvasRef}></canvas>
-      <audio ref={audioRef}></audio>
     </div>
   );
 };
