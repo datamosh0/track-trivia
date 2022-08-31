@@ -15,6 +15,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   const [localAudio, setLocalAudio] = useState<any>();
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
+  const [suspended, setSuspended] = useState<boolean>(false);
   const loadVisual = () => {
     if (window !== undefined) {
       var canvas: any = canvasRef.current;
@@ -83,7 +84,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         audio.pause();
         setShowResetButton(true);
       }, 10000);
-
+      if (context.state === "suspended") setSuspended(true);
       setTimeout(() => {
         setLocalAudio(audio);
         setLocalTimeout(myTimeout);
@@ -152,6 +153,9 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         ></input>
       </div>
 
+      {suspended && (
+        <div onClick={() => localContext.resume()}>audio suspended</div>
+      )}
       <canvas ref={canvasRef}></canvas>
       <audio ref={audioRef}></audio>
     </div>
