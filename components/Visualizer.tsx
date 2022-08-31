@@ -122,7 +122,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
           style={{
             marginTop: "1rem",
             marginLeft: "7%",
-            position: "fixed",
+            position: "absolute",
           }}
         >
           <div
