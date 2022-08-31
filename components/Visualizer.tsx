@@ -18,6 +18,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   const [suspended, setSuspended] = useState<boolean>(false);
   const loadVisual = () => {
     if (window !== undefined) {
+      setSuspended(false);
       var canvas: any = canvasRef.current;
       var audio: any = audioRef.current;
       audio.src = `${trackURL}`;
@@ -30,6 +31,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         src = context.createMediaElementSource(audio);
       } else {
         context = localContext;
+        context.resume();
         src = localSource;
       }
 
@@ -79,6 +81,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
       };
       audioRef.current.volume = localVolume;
       audio.play();
+      console.log(context.state);
       if (context.state === "suspended") {
         setSuspended(true);
         return;
