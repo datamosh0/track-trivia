@@ -85,6 +85,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         setShowResetButton(true);
       }, 10000);
       if (context.state === "suspended") setSuspended(true);
+      else setSuspended(true);
       setTimeout(() => {
         setLocalAudio(audio);
         setLocalTimeout(myTimeout);
