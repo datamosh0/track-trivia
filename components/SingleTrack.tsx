@@ -58,7 +58,7 @@ const SingleTrack = ({
   return (
     <>
       {!loading ? (
-        <div className={play.playStaticContainer}>
+        <div className={play.playScreenContainer}>
           <div
             className={play.homeArrowContainer}
             onClick={() =>
@@ -98,7 +98,7 @@ const SingleTrack = ({
 
               <div className={play.playImgContainer}>
                 <img
-                  className={main.thumbnailImg}
+                  className={play.thumbnailImg}
                   src={thisTrack.albumURL}
                   alt="alt"
                 />

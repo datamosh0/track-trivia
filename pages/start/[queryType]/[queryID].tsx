@@ -9,11 +9,12 @@ import { useDispatch } from "react-redux";
 import { setTrackData, setTracksImport } from "../../../app/trackData";
 import leftArrow from "../../../assets/leftArrow.svg";
 import play from "../../../styles/Play.module.css";
+import { NextPage } from "next";
 
-const QueryID = () => {
+const QueryID: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { queryID } = router.query;
+  const { QueryID } = router.query;
   const [loading, setLoading] = useState<boolean>(true);
   const [artistName, setArtistName] = useState<string>("");
   const [localTracksImport, setLocalTracksImport] = useState<string>("");
@@ -37,7 +38,7 @@ const QueryID = () => {
           randomTrackIndexes.push(randomNum);
           const thisTrack = Object.entries(tempTracksImport)[randomNum];
           const supabaseID =
-            queryID + "/" + thisTrack[0].replace(/ /g, "_") + ".mp3";
+            QueryID + "/" + thisTrack[0].replace(/ /g, "_") + ".mp3";
           const { publicURL } = supabase.storage
             .from("audio")
             .getPublicUrl(supabaseID);
@@ -72,13 +73,13 @@ const QueryID = () => {
       const firstCall = async () => {
         let tempArtistName: string;
         Object.entries(nameId).forEach(([name, id]) => {
-          if (id === queryID) tempArtistName = name;
+          if (id === QueryID) tempArtistName = name;
         });
         const tempTracksImport = await import(
-          `../../../JSON/trackIDtoName/${queryID}.json`
+          `../../../JSON/trackIDtoName/${QueryID}.json`
         );
         const tempThumbnailImg = await import(
-          `../../../assets/thumbnails/${queryID}.jpg`
+          `../../../assets/thumbnails/${QueryID}.jpg`
         );
 
         setThumbnailImg(tempThumbnailImg.default.src);
@@ -97,7 +98,7 @@ const QueryID = () => {
       for (let i = 0; i < 4; i++) {
         let thisTimeout = setTimeout(() => {
           if (i < 3) setCountdownValue(countdownValue - i);
-          else router.push(`/play/${encodeURIComponent(queryID as string)}`);
+          else router.push(`/play/${encodeURIComponent(QueryID as string)}`);
         }, i * 1000);
         tempTimeouts.push(thisTimeout);
       }

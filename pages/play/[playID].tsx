@@ -7,8 +7,9 @@ import { selectTrackData, selectTracksImport } from "../../app/trackData";
 import nameId from "../../JSON/nameId.json";
 import main from "../../styles/Main.module.css";
 import { supabase } from "../../supabaseClient";
+import { NextPage } from "next";
 
-const Play = () => {
+const Play: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [showScore, setShowScore] = useState<boolean>(false);
   const [thisTrack, setThisTrack] = useState<TrackData>();
@@ -85,7 +86,7 @@ const Play = () => {
   }, [showScore]);
 
   return (
-    <>
+    <div className={play.playStaticContainer}>
       {!loading ? (
         showScore ? (
           <div>
@@ -158,7 +159,6 @@ const Play = () => {
                 })}
               </div>
             </div>
-            <div></div>
           </div>
         ) : (
           <SingleTrack
@@ -171,7 +171,7 @@ const Play = () => {
       ) : (
         <div className={play.playStaticContainer}></div>
       )}
-    </>
+    </div>
   );
 };
 
