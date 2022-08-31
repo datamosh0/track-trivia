@@ -32,10 +32,9 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         src = context.createMediaElementSource(audio);
       } else {
         context = localContext;
-        context.resume();
         src = localSource;
+        context.resume();
       }
-
       var analyser = context.createAnalyser();
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight / 2.5;
@@ -108,10 +107,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   }, [showAnswer]);
 
   useEffect(() => {
-    if (localContext.state === "suspended") setSuspended(true);
-    else setSuspended(true);
-  }, [localContext]);
-  useEffect(() => {
     loadVisual();
   }, []);
 
@@ -124,55 +119,49 @@ const Visualizer = ({ trackURL, showAnswer }) => {
 
   return (
     <div>
-      {suspended ? (
-        <div onClick={loadVisual} className={play.playBtn}>
-          listen
-        </div>
-      ) : (
+      <div>
         <div>
-          <div>
-            {showResetButton && (
+          {showResetButton && (
+            <div
+              style={{
+                marginTop: "1rem",
+                marginLeft: "7%",
+                position: "absolute",
+              }}
+            >
               <div
+                className={play.playBtn}
                 style={{
-                  marginTop: "1rem",
-                  marginLeft: "7%",
-                  position: "absolute",
+                  width: "100px",
+                  height: "50px",
+                  fontSize: ".8rem",
                 }}
+                onClick={loadVisual}
               >
-                <div
-                  className={play.playBtn}
-                  style={{
-                    width: "100px",
-                    height: "50px",
-                    fontSize: ".8rem",
-                  }}
-                  onClick={loadVisual}
-                >
-                  listen again
-                </div>
+                listen again
               </div>
-            )}
-            <div className={play.volumeInputContainer}>
-              <input
-                type="range"
-                id="volume"
-                min=".02"
-                max="1"
-                step=".01"
-                value={localVolume}
-                ref={volumeRef}
-                onChange={changeVolume}
-                className={play.volumeInput}
-              ></input>
             </div>
-            <canvas ref={canvasRef}></canvas>
-            <audio ref={audioRef}></audio>
+          )}
+          <div className={play.volumeInputContainer}>
+            <input
+              type="range"
+              id="volume"
+              min=".02"
+              max="1"
+              step=".01"
+              value={localVolume}
+              ref={volumeRef}
+              onChange={changeVolume}
+              className={play.volumeInput}
+            ></input>
           </div>
-          <div className={play.bar}>
-            <div className={play.in}></div>
-          </div>
+          <canvas ref={canvasRef}></canvas>
+          <audio ref={audioRef}></audio>
         </div>
-      )}
+        <div className={play.bar}>
+          <div className={play.in}></div>
+        </div>
+      </div>
     </div>
   );
 };
