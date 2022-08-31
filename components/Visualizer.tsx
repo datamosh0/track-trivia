@@ -32,10 +32,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         context = localContext;
         src = localSource;
       }
-      if (context.state === "suspended") {
-        setSuspended(true);
-        return;
-      }
 
       var analyser = context.createAnalyser();
       canvas.width = window.innerWidth;
@@ -83,6 +79,10 @@ const Visualizer = ({ trackURL, showAnswer }) => {
       };
       audioRef.current.volume = localVolume;
       audio.play();
+      if (context.state === "suspended") {
+        setSuspended(true);
+        return;
+      }
       renderFrame();
       let myTimeout = setTimeout(() => {
         audio.pause();
