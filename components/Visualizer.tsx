@@ -108,12 +108,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
     }
   }, [showAnswer]);
 
-  const startMobile = () => {
-    localContext.resume();
-    setSuspended(false);
-    loadVisual();
-  };
-
   useEffect(() => {
     loadVisual();
   }, []);
@@ -128,7 +122,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   return (
     <div>
       {suspended ? (
-        <div onClick={startMobile} className={play.playBtn}>
+        <div onClick={loadVisual} className={play.playBtn}>
           listen
         </div>
       ) : (
