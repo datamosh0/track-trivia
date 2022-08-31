@@ -85,7 +85,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         setShowResetButton(true);
       }, 10000);
       if (context.state === "suspended") setSuspended(true);
-      else setSuspended(false);
       setTimeout(() => {
         setLocalAudio(audio);
         setLocalTimeout(myTimeout);
@@ -108,6 +107,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
 
   const startMobile = () => {
     localContext.resume();
+    setSuspended(false);
     loadVisual();
   };
 
