@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { isContext } from "vm";
 import { selectVolume } from "../app/trackData";
 import { setVolume } from "../app/trackData";
 import play from "../styles/Play.module.css";
@@ -81,11 +82,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
       };
       audioRef.current.volume = localVolume;
       audio.play();
-      console.log(context.state);
-      if (context.state === "suspended") {
-        setSuspended(true);
-        return;
-      }
       renderFrame();
       let myTimeout = setTimeout(() => {
         audio.pause();
@@ -111,6 +107,10 @@ const Visualizer = ({ trackURL, showAnswer }) => {
     }
   }, [showAnswer]);
 
+  useEffect(() => {
+    if (localContext.state === "suspended") setSuspended(true);
+    else setSuspended(true);
+  }, [localContext]);
   useEffect(() => {
     loadVisual();
   }, []);
