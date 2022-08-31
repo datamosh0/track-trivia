@@ -85,7 +85,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         setShowResetButton(true);
       }, 10000);
       if (context.state === "suspended") setSuspended(true);
-      else setSuspended(true);
+      else setSuspended(false);
       setTimeout(() => {
         setLocalAudio(audio);
         setLocalTimeout(myTimeout);
@@ -124,41 +124,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
 
   return (
     <div>
-      {showResetButton && (
-        <div
-          style={{
-            marginTop: "1rem",
-            marginLeft: "7%",
-            position: "absolute",
-          }}
-        >
-          <div
-            className={play.playBtn}
-            style={{
-              width: "100px",
-              height: "50px",
-              fontSize: ".8rem",
-            }}
-            onClick={loadVisual}
-          >
-            listen again
-          </div>
-        </div>
-      )}
-      <div className={play.volumeInputContainer}>
-        <input
-          type="range"
-          id="volume"
-          min=".02"
-          max="1"
-          step=".01"
-          value={localVolume}
-          ref={volumeRef}
-          onChange={changeVolume}
-          className={play.volumeInput}
-        ></input>
-      </div>
-
       {suspended ? (
         <div onClick={startMobile} className={play.playBtn}>
           listen
@@ -166,6 +131,40 @@ const Visualizer = ({ trackURL, showAnswer }) => {
       ) : (
         <div>
           <div>
+            {showResetButton && (
+              <div
+                style={{
+                  marginTop: "1rem",
+                  marginLeft: "7%",
+                  position: "absolute",
+                }}
+              >
+                <div
+                  className={play.playBtn}
+                  style={{
+                    width: "100px",
+                    height: "50px",
+                    fontSize: ".8rem",
+                  }}
+                  onClick={loadVisual}
+                >
+                  listen again
+                </div>
+              </div>
+            )}
+            <div className={play.volumeInputContainer}>
+              <input
+                type="range"
+                id="volume"
+                min=".02"
+                max="1"
+                step=".01"
+                value={localVolume}
+                ref={volumeRef}
+                onChange={changeVolume}
+                className={play.volumeInput}
+              ></input>
+            </div>
             <canvas ref={canvasRef}></canvas>
             <audio ref={audioRef}></audio>
           </div>
