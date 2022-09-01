@@ -89,7 +89,7 @@ const Play: NextPage = () => {
   return (
     <div className={play.playStaticContainer}>
       {!loading ? (
-        !showScore ? (
+        showScore ? (
           <div>
             <div className={play.endScreenStaticContainer}>
               <div className={play.playImgContainer}>
