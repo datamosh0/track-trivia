@@ -17,7 +17,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
   const [showListenBtn, setShowListenBtn] = useState<boolean>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const loadVisual = () => {
     if (window !== undefined) {
       var canvas: any = canvasRef.current;
