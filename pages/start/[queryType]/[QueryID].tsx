@@ -14,7 +14,7 @@ import { NextPage } from "next";
 const QueryID: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { QueryID } = router.query;
+  const { QueryID, queryType } = router.query;
   const [loading, setLoading] = useState<boolean>(true);
   const [artistName, setArtistName] = useState<string>("");
   const [localTracksImport, setLocalTracksImport] = useState<string>("");
@@ -98,7 +98,12 @@ const QueryID: NextPage = () => {
       for (let i = 0; i < 4; i++) {
         let thisTimeout = setTimeout(() => {
           if (i < 3) setCountdownValue(countdownValue - i);
-          else router.push(`/play/${encodeURIComponent(QueryID as string)}`);
+          else
+            router.push(
+              `/play/${encodeURIComponent(
+                queryType as string
+              )}/${encodeURIComponent(QueryID as string)}`
+            );
         }, i * 1000);
         tempTimeouts.push(thisTimeout);
       }
@@ -139,9 +144,28 @@ const QueryID: NextPage = () => {
                 Share
                 <ul className={main.drop}>
                   <div>
-                    <li>Twitter</li>
-                    <li>Facebook</li>
-                    <li>Instagram</li>
+                    <li>
+                      <a
+                        className="twitter-share-button"
+                        target="_blank"
+                        rel="noreferrer"
+                        href={`https://twitter.com/intent/tweet?text=${artistName}%20Track%20Trivia!%20Test%20Your%20Music%20Knowledge%20at%20https://track-trivia.vercel.app/start/${queryType}/${QueryID}`}
+                        data-size="large"
+                      >
+                        Twitter
+                      </a>
+                    </li>
+                    <li
+                      onClick={() =>
+                        navigator.clipboard.writeText(
+                          `https://track-trivia.vercel.app/start/${queryType}/${QueryID}`
+                        )
+                      }
+                    >
+                      Copy Link
+                    </li>
+                    {/* <li>Facebook</li>
+                    <li>Instagram</li> */}
                   </div>
                 </ul>
               </li>

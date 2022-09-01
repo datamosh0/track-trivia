@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import play from "../../styles/Play.module.css";
+import play from "../../../styles/Play.module.css";
 import { useRouter } from "next/router";
-import SingleTrack from "../../components/SingleTrack";
+import SingleTrack from "../../../components/SingleTrack";
 import { useSelector } from "react-redux";
-import { selectTrackData, selectTracksImport } from "../../app/trackData";
-import nameId from "../../JSON/nameId.json";
-import main from "../../styles/Main.module.css";
-import { supabase } from "../../supabaseClient";
+import { selectTrackData, selectTracksImport } from "../../../app/trackData";
+import nameId from "../../../JSON/nameId.json";
+import main from "../../../styles/Main.module.css";
+import { supabase } from "../../../supabaseClient";
 import { NextPage } from "next";
+import QueryID from "../../start/[queryType]/[QueryID]";
 
 const Play: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -21,7 +22,7 @@ const Play: NextPage = () => {
   const [scoreAvg, setScoreAvg] = useState<number | string>();
   const [playedTimes, setPlayedTimes] = useState<number>();
   const router = useRouter();
-  const { playID } = router.query;
+  const { playID, queryType } = router.query;
   const trackData = useSelector(selectTrackData);
   const tracksImport = useSelector(selectTracksImport);
 
@@ -56,7 +57,7 @@ const Play: NextPage = () => {
         if (id === playID) tempArtistName = name;
       });
       const tempThumbnailImg = await import(
-        `../../assets/thumbnails/${playID}.jpg`
+        `../../../assets/thumbnails/${playID}.jpg`
       );
       setArtistName(tempArtistName);
       setThumbnailImg(tempThumbnailImg.default.src);
@@ -88,7 +89,7 @@ const Play: NextPage = () => {
   return (
     <div className={play.playStaticContainer}>
       {!loading ? (
-        showScore ? (
+        !showScore ? (
           <div>
             <div className={play.endScreenStaticContainer}>
               <div className={play.playImgContainer}>
@@ -114,9 +115,28 @@ const Play: NextPage = () => {
                     Share
                     <ul className={main.drop}>
                       <div>
-                        <li>Twitter</li>
-                        <li>Facebook</li>
-                        <li>Instagram</li>
+                        <li>
+                          <a
+                            className="twitter-share-button"
+                            target="_blank"
+                            rel="noreferrer"
+                            href={`https://twitter.com/intent/tweet?text=${artistName}%20Track%20Trivia!%20Test%20Your%20Music%20Knowledge%20at%20https://track-trivia.vercel.app/start/${queryType}/${playID}`}
+                            data-size="large"
+                          >
+                            Twitter
+                          </a>
+                        </li>
+                        <li
+                          onClick={() =>
+                            navigator.clipboard.writeText(
+                              `https://track-trivia.vercel.app/start/${queryType}/${playID}`
+                            )
+                          }
+                        >
+                          Copy Link
+                        </li>
+                        {/* <li>Facebook</li>
+                        <li>Instagram</li> */}
                       </div>
                     </ul>
                   </li>
@@ -127,7 +147,7 @@ const Play: NextPage = () => {
                     router.push(
                       `/start/${encodeURIComponent(
                         "artists"
-                      )}/${encodeURIComponent("5K4W6rqBFWDnAN6FQUkS6x")}`
+                      )}/${encodeURIComponent(`${playID}`)}`
                     )
                   }
                 >
