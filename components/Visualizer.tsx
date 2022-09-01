@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { isContext } from "vm";
+import { isMobile } from "react-device-detect";
 import { selectVolume } from "../app/trackData";
 import { setVolume } from "../app/trackData";
 import play from "../styles/Play.module.css";
@@ -16,10 +16,10 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   const [localAudio, setLocalAudio] = useState<any>();
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
-  const [suspended, setSuspended] = useState<boolean>(false);
+  const [showListenBtn, setShowListenBtn] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
   const loadVisual = () => {
     if (window !== undefined) {
-      setSuspended(false);
       var canvas: any = canvasRef.current;
       var audio: any = audioRef.current;
       audio.src = `${trackURL}`;
@@ -86,6 +86,8 @@ const Visualizer = ({ trackURL, showAnswer }) => {
         audio.pause();
         setShowResetButton(true);
       }, 10000);
+      setLoading(false);
+      setShowListenBtn(false);
       setTimeout(() => {
         setLocalAudio(audio);
         setLocalTimeout(myTimeout);
@@ -107,7 +109,8 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   }, [showAnswer]);
 
   useEffect(() => {
-    loadVisual();
+    if (isMobile && loading) setShowListenBtn(true);
+    if (!isMobile) loadVisual();
   }, []);
 
   const changeVolume = () => {
@@ -119,49 +122,56 @@ const Visualizer = ({ trackURL, showAnswer }) => {
 
   return (
     <div>
-      <div>
+      {showListenBtn && (
+        <div className={play.playBtn} onClick={loadVisual}>
+          listen
+        </div>
+      )}
+      {!loading && (
         <div>
-          {showResetButton && (
-            <div
-              style={{
-                marginTop: "1rem",
-                marginLeft: "7%",
-                position: "absolute",
-              }}
-            >
+          <div>
+            {showResetButton && (
               <div
-                className={play.playBtn}
                 style={{
-                  width: "100px",
-                  height: "50px",
-                  fontSize: ".8rem",
+                  marginTop: "1rem",
+                  marginLeft: "7%",
+                  position: "absolute",
                 }}
-                onClick={loadVisual}
               >
-                listen again
+                <div
+                  className={play.playBtn}
+                  style={{
+                    width: "100px",
+                    height: "50px",
+                    fontSize: ".8rem",
+                  }}
+                  onClick={loadVisual}
+                >
+                  listen again
+                </div>
               </div>
+            )}
+            <div className={play.volumeInputContainer}>
+              <input
+                type="range"
+                id="volume"
+                min=".02"
+                max="1"
+                step=".01"
+                value={localVolume}
+                ref={volumeRef}
+                onChange={changeVolume}
+                className={play.volumeInput}
+              ></input>
             </div>
-          )}
-          <div className={play.volumeInputContainer}>
-            <input
-              type="range"
-              id="volume"
-              min=".02"
-              max="1"
-              step=".01"
-              value={localVolume}
-              ref={volumeRef}
-              onChange={changeVolume}
-              className={play.volumeInput}
-            ></input>
+            <canvas ref={canvasRef}></canvas>
+            <audio ref={audioRef}></audio>
           </div>
-          <canvas ref={canvasRef}></canvas>
-          <audio ref={audioRef}></audio>
+          <div className={play.bar}>
+            <div className={play.in}></div>
+          </div>
         </div>
-        <div className={play.bar}>
-          <div className={play.in}></div>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
