@@ -122,56 +122,62 @@ const Visualizer = ({ trackURL, showAnswer }) => {
 
   return (
     <div>
-      {showListenBtn && (
-        <div className={play.playBtn} onClick={loadVisual}>
-          listen
-        </div>
-      )}
-      {!loading && (
+      <div>
+        {showListenBtn && (
+          <div className={play.playBtn} onClick={loadVisual}>
+            listen
+          </div>
+        )}
         <div>
-          <div>
-            {showResetButton && (
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: "7%",
-                  position: "absolute",
-                }}
-              >
+          {!loading && (
+            <div>
+              {showResetButton && (
                 <div
-                  className={play.playBtn}
                   style={{
-                    width: "100px",
-                    height: "50px",
-                    fontSize: ".8rem",
+                    marginTop: "1rem",
+                    marginLeft: "7%",
+                    position: "absolute",
                   }}
-                  onClick={loadVisual}
                 >
-                  listen again
+                  <div
+                    className={play.playBtn}
+                    style={{
+                      width: "100px",
+                      height: "50px",
+                      fontSize: ".8rem",
+                    }}
+                    onClick={loadVisual}
+                  >
+                    listen again
+                  </div>
                 </div>
+              )}
+              <div className={play.volumeInputContainer}>
+                <input
+                  type="range"
+                  id="volume"
+                  min=".02"
+                  max="1"
+                  step=".01"
+                  value={localVolume}
+                  ref={volumeRef}
+                  onChange={changeVolume}
+                  className={play.volumeInput}
+                ></input>
               </div>
-            )}
-            <div className={play.volumeInputContainer}>
-              <input
-                type="range"
-                id="volume"
-                min=".02"
-                max="1"
-                step=".01"
-                value={localVolume}
-                ref={volumeRef}
-                onChange={changeVolume}
-                className={play.volumeInput}
-              ></input>
             </div>
-            <canvas ref={canvasRef}></canvas>
-            <audio ref={audioRef}></audio>
-          </div>
-          <div className={play.bar}>
-            <div className={play.in}></div>
-          </div>
+          )}
+          <canvas ref={canvasRef}></canvas>
+          <audio ref={audioRef}></audio>
         </div>
-      )}
+        {!loading && (
+          <div>
+            <div className={play.bar}>
+              <div className={play.in}></div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
