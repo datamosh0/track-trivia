@@ -18,6 +18,8 @@ const SingleTrack = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [correct, setCorrect] = useState<boolean>(false);
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const [showListenBtn, setShowListenBtn] = useState<boolean>(false);
+
   useEffect(() => {
     let tempAnswerOptions: string[] = [];
     const tracksLength = Object.keys(tracksImport).length - 1;
@@ -74,45 +76,58 @@ const SingleTrack = ({
           </div>
           <div></div>
           <div></div>
-          {!showAnswer ? (
-            <div className={play.playContainer}>
-              {answerOptions.map((answer: string) => {
-                return (
-                  <div
-                    className={play.playBtn}
-                    key={answer}
-                    onClick={() => checkAnswer(answer)}
-                  >
-                    {answer}
-                  </div>
-                );
-              })}
+          {showListenBtn ? (
+            <div style={{ textAlign: "center" }}>
+              <h2 style={{ marginBottom: "10rem" }} className={main.header1}>
+                {trackIndex + 1}/10
+              </h2>
+              <h1 className={main.header1}>{thisTrack.artistNames[0]}</h1>
             </div>
           ) : (
-            <div className={play.answerContainer}>
-              {correct ? (
-                <h1 className={play.answer}>Correct 🎉✅</h1>
+            <div>
+              {!showAnswer ? (
+                <div className={play.playContainer}>
+                  {answerOptions.map((answer: string) => {
+                    return (
+                      <div
+                        className={play.playBtn}
+                        key={answer}
+                        onClick={() => checkAnswer(answer)}
+                      >
+                        {answer}
+                      </div>
+                    );
+                  })}
+                </div>
               ) : (
-                <h1 className={play.answer}>Wrong 💥❌</h1>
-              )}
+                <div className={play.answerContainer}>
+                  {correct ? (
+                    <h1 className={play.answer}>Correct 🎉✅</h1>
+                  ) : (
+                    <h1 className={play.answer}>Wrong 💥❌</h1>
+                  )}
 
-              <div className={play.playImgContainer}>
-                <img
-                  className={play.thumbnailImg}
-                  src={thisTrack.albumURL}
-                  alt="alt"
-                />
-                <div className={main.pl}>
-                  <div className={main.imgSubContainer}>
-                    <div>{trackIndex + 1}/10</div>
-                    <h1 className={main.header1}>{thisTrack.name}</h1>
-                    <h3 className={main.header1}>{thisTrack.artistNames[0]}</h3>
-                  </div>
-                  <div className={main.btn} onClick={resetTrack}>
-                    Continue
+                  <div className={play.playImgContainer}>
+                    <img
+                      className={play.thumbnailImg}
+                      src={thisTrack.albumURL}
+                      alt="alt"
+                    />
+                    <div className={main.pl}>
+                      <div className={main.imgSubContainer}>
+                        <div>{trackIndex + 1}/10</div>
+                        <h1 className={main.header1}>{thisTrack.name}</h1>
+                        <h3 className={main.header1}>
+                          {thisTrack.artistNames[0]}
+                        </h3>
+                      </div>
+                      <div className={main.btn} onClick={resetTrack}>
+                        Continue
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
 
@@ -120,6 +135,8 @@ const SingleTrack = ({
             <Visualizer
               trackURL={thisTrack.publicURL}
               showAnswer={showAnswer}
+              setShowListenBtn={setShowListenBtn}
+              showListenBtn={showListenBtn}
             ></Visualizer>
           </div>
         </div>

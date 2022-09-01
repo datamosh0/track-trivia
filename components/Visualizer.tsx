@@ -4,7 +4,12 @@ import { isMobile } from "react-device-detect";
 import { selectVolume } from "../app/trackData";
 import { setVolume } from "../app/trackData";
 import play from "../styles/Play.module.css";
-const Visualizer = ({ trackURL, showAnswer }) => {
+const Visualizer = ({
+  trackURL,
+  showAnswer,
+  setShowListenBtn,
+  showListenBtn,
+}) => {
   const windowVolume = useSelector(selectVolume);
   const dispatch = useDispatch();
   const canvasRef = useRef();
@@ -16,7 +21,6 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   const [localAudio, setLocalAudio] = useState<any>();
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
-  const [showListenBtn, setShowListenBtn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const loadVisual = () => {
     if (window !== undefined) {
@@ -124,8 +128,10 @@ const Visualizer = ({ trackURL, showAnswer }) => {
     <div>
       <div>
         {showListenBtn && (
-          <div className={play.playBtn} onClick={loadVisual}>
-            listen
+          <div className={play.listenBtn}>
+            <div className={play.playBtn} onClick={loadVisual}>
+              listen
+            </div>
           </div>
         )}
         <div>
@@ -152,19 +158,21 @@ const Visualizer = ({ trackURL, showAnswer }) => {
                   </div>
                 </div>
               )}
-              <div className={play.volumeInputContainer}>
-                <input
-                  type="range"
-                  id="volume"
-                  min=".02"
-                  max="1"
-                  step=".01"
-                  value={localVolume}
-                  ref={volumeRef}
-                  onChange={changeVolume}
-                  className={play.volumeInput}
-                ></input>
-              </div>
+              {!isMobile && (
+                <div className={play.volumeInputContainer}>
+                  <input
+                    type="range"
+                    id="volume"
+                    min=".02"
+                    max="1"
+                    step=".01"
+                    value={localVolume}
+                    ref={volumeRef}
+                    onChange={changeVolume}
+                    className={play.volumeInput}
+                  ></input>
+                </div>
+              )}
             </div>
           )}
           <canvas ref={canvasRef}></canvas>
