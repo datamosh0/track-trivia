@@ -16,7 +16,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   const [localAudio, setLocalAudio] = useState<any>();
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
-  const [showListenBtn, setShowListenBtn] = useState<boolean>();
+  const [showListenBtn, setShowListenBtn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const loadVisual = () => {
     if (window !== undefined) {
@@ -109,7 +109,7 @@ const Visualizer = ({ trackURL, showAnswer }) => {
   }, [showAnswer]);
 
   useEffect(() => {
-    if (isMobile && loading) setShowListenBtn(true);
+    if (isMobile) setShowListenBtn(true);
     if (!isMobile) loadVisual();
   }, []);
 
