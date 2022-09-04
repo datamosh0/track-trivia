@@ -84,7 +84,7 @@ const SingleTrack = ({
           <div></div>
           <div></div>
           {showListenBtn ? (
-            <div style={{ textAlign: "center", position: "fixed" }}>
+            <div style={{ textAlign: "center", position: "fixed", top: "35%" }}>
               <h2 style={{ marginBottom: "10rem" }} className={main.header1}>
                 {trackIndex + 1}/10
               </h2>
