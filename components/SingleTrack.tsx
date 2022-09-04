@@ -12,7 +12,14 @@ const SingleTrack = ({
   thisTrack,
   nextTrack,
   trackIndex,
-}: any) => {
+  artistName,
+}: {
+  tracksImport: Object;
+  thisTrack: TrackData;
+  nextTrack: Function;
+  trackIndex: number;
+  artistName: string;
+}) => {
   const router = useRouter();
   const { playID } = router.query;
   const [answerOptions, setAnswerOptions] = useState<string[]>();
@@ -41,7 +48,6 @@ const SingleTrack = ({
     tempAnswerOptions.push(thisTrack.name);
     const shuffledAnswerOptions = shuffle(tempAnswerOptions);
     setAnswerOptions(shuffledAnswerOptions);
-    console.log(isMobile);
     if (isMobile) setShowListenBtn(true);
     setLoading(false);
   }, [thisTrack]);
@@ -58,7 +64,6 @@ const SingleTrack = ({
     const addToScore = correct ? 1 : 0;
     nextTrack(addToScore);
   };
-
   return (
     <>
       {!loading ? (
@@ -79,11 +84,11 @@ const SingleTrack = ({
           <div></div>
           <div></div>
           {showListenBtn ? (
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center", position: "absolute" }}>
               <h2 style={{ marginBottom: "10rem" }} className={main.header1}>
                 {trackIndex + 1}/10
               </h2>
-              <h1 className={main.header1}>{thisTrack.artistNames[0]}</h1>
+              <h1 className={main.header1}>{artistName}</h1>
             </div>
           ) : (
             <div>

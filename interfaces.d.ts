@@ -1,7 +1,7 @@
 interface TrackData {
   albumName: string;
   albumURL: string;
-  artistsNames: string[];
+  artistNames: string[];
   name: string;
   publicURL: string;
   spotify: string;

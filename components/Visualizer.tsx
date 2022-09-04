@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { isMobile } from "react-device-detect";
 import { selectVolume } from "../app/trackData";
@@ -9,24 +9,29 @@ const Visualizer = ({
   showAnswer,
   setShowListenBtn,
   showListenBtn,
+}: {
+  trackURL: string;
+  showAnswer: boolean;
+  setShowListenBtn: Dispatch<SetStateAction<boolean>>;
+  showListenBtn: boolean;
 }) => {
   const windowVolume = useSelector(selectVolume);
   const dispatch = useDispatch();
-  const canvasRef = useRef();
-  const audioRef = useRef<any>();
-  const volumeRef = useRef<any>();
-  const [localContext, setLocalContext] = useState<any>();
-  const [localSource, setLocalSource] = useState<any>();
-  const [localTimeout, setLocalTimeout] = useState<any>();
-  const [localAudio, setLocalAudio] = useState<any>();
+  const canvasRef = useRef<HTMLCanvasElement>();
+  const audioRef = useRef<HTMLAudioElement>();
+  const volumeRef = useRef<HTMLInputElement>();
+  const [localContext, setLocalContext] = useState<AudioContext>();
+  const [localSource, setLocalSource] = useState<MediaElementAudioSourceNode>();
+  const [localTimeout, setLocalTimeout] = useState<NodeJS.Timeout>();
+  const [localAudio, setLocalAudio] = useState<HTMLAudioElement>();
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(true);
 
   const loadVisual = () => {
     if (window !== undefined) {
-      var canvas: any = canvasRef.current;
-      var audio: any = audioRef.current;
+      var canvas = canvasRef.current;
+      var audio = audioRef.current;
       audio.src = `${trackURL}`;
       audio.load();
       audio.crossOrigin = "anonymous";
@@ -118,7 +123,7 @@ const Visualizer = ({
   }, []);
 
   const changeVolume = () => {
-    const newVolume = volumeRef!.current.value as number;
+    const newVolume = parseInt(volumeRef!.current.value);
     audioRef.current.volume = newVolume;
     dispatch(setVolume(newVolume));
     setLocalVolume(newVolume);

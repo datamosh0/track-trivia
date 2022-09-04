@@ -8,8 +8,6 @@ import nameId from "../../../JSON/nameId.json";
 import main from "../../../styles/Main.module.css";
 import { supabase } from "../../../supabaseClient";
 import { NextPage } from "next";
-import QueryID from "../../start/[queryType]/[QueryID]";
-
 const Play: NextPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [showScore, setShowScore] = useState<boolean>(false);
@@ -184,6 +182,7 @@ const Play: NextPage = () => {
             tracksImport={tracksImport!}
             nextTrack={nextTrack}
             trackIndex={trackIndex}
+            artistName={artistName}
           ></SingleTrack>
         )
       ) : (

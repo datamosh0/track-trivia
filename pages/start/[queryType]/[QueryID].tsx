@@ -21,8 +21,8 @@ const QueryID: NextPage = () => {
   const [thumbnailImg, setThumbnailImg] = useState<string>("");
   const [countdownValue, setCountdownValue] = useState<number>(3);
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
-  const [timeouts, setTimeouts] = useState<any>();
-  const callArtist = async (tempTracksImport: any) => {
+  const [timeouts, setTimeouts] = useState<NodeJS.Timeout[]>();
+  const callArtist = async (tempTracksImport: TrackData[]) => {
     //Generate 10 Random Track Urls
     let quizLength = 10;
     const tracksLength = Object.keys(tempTracksImport).length - 1;
@@ -48,7 +48,7 @@ const QueryID: NextPage = () => {
             external_urls: { spotify },
             name,
             artists,
-          } = await wrapInRetry(getTracksData, thisTrack[1] as string);
+          } = await wrapInRetry(getTracksData, thisTrack[1]);
           const albumURL = images.images[1].url;
           const artistNames = artists.map((artist: any) => {
             return artist.name;
