@@ -164,8 +164,6 @@ const QueryID: NextPage = () => {
                     >
                       Copy Link
                     </li>
-                    {/* <li>Facebook</li>
-                    <li>Instagram</li> */}
                   </div>
                 </ul>
               </li>

@@ -70,7 +70,7 @@ const Play: NextPage = () => {
             return value.score;
           })
           .reduce((partialSum, a) => partialSum + a, 0) / tempPlayedTimes;
-      const returnAvg = tempScoreAvg ? tempScoreAvg : "?";
+      const returnAvg = tempScoreAvg ? tempScoreAvg.toFixed(1) : "?";
       setScoreAvg(returnAvg);
       setPlayedTimes(tempPlayedTimes);
     };
@@ -135,8 +135,6 @@ const Play: NextPage = () => {
                         >
                           Copy Link
                         </li>
-                        {/* <li>Facebook</li>
-                        <li>Instagram</li> */}
                       </div>
                     </ul>
                   </li>

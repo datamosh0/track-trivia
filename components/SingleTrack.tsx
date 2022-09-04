@@ -5,6 +5,7 @@ import { shuffle } from "./call";
 import main from "../styles/Main.module.css";
 import cancelGame from "../assets/cancelGame.svg";
 import { useRouter } from "next/router";
+import { isMobile } from "react-device-detect";
 
 const SingleTrack = ({
   tracksImport,
@@ -40,13 +41,14 @@ const SingleTrack = ({
     tempAnswerOptions.push(thisTrack.name);
     const shuffledAnswerOptions = shuffle(tempAnswerOptions);
     setAnswerOptions(shuffledAnswerOptions);
+    console.log(isMobile);
+    if (isMobile) setShowListenBtn(true);
     setLoading(false);
   }, [thisTrack]);
 
   const checkAnswer = (clickedAnswer: string) => {
     if (clickedAnswer === thisTrack.name) setCorrect(true);
     else setCorrect(false);
-
     setShowAnswer(true);
   };
 

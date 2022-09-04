@@ -22,6 +22,7 @@ const Visualizer = ({
   const [localVolume, setLocalVolume] = useState<number>(windowVolume);
   const [showResetButton, setShowResetButton] = useState<boolean>();
   const [loading, setLoading] = useState<boolean>(true);
+
   const loadVisual = () => {
     if (window !== undefined) {
       var canvas: any = canvasRef.current;
@@ -113,7 +114,6 @@ const Visualizer = ({
   }, [showAnswer]);
 
   useEffect(() => {
-    if (isMobile) setShowListenBtn(true);
     if (!isMobile) loadVisual();
   }, []);
 

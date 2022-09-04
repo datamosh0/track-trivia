@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import MyUtil from "../components/myUtil";
 import main from "../styles/Main.module.css";
 import nameId from "../JSON/nameId.json";
 

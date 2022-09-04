@@ -108,7 +108,7 @@
 
 .playImgContainer {
   display: flex;
-  height: 260px;
+  min-height: 260px;
   margin: 1rem;
   align-items: center;
   padding: 1rem;
