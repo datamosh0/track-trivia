@@ -10,6 +10,7 @@ import { setTrackData, setTracksImport } from "../../../app/trackData";
 import leftArrow from "../../../assets/leftArrow.svg";
 import play from "../../../styles/Play.module.css";
 import { NextPage } from "next";
+import loadingSRC from "../../../assets/loadingGIF.gif";
 
 const QueryID: NextPage = () => {
   const dispatch = useDispatch();
@@ -17,17 +18,18 @@ const QueryID: NextPage = () => {
   const { QueryID, queryType } = router.query;
   const [loading, setLoading] = useState<boolean>(true);
   const [artistName, setArtistName] = useState<string>("");
-  const [localTracksImport, setLocalTracksImport] = useState<string>("");
-  const [thumbnailImg, setThumbnailImg] = useState<string>("");
+  const [thumbnailImg, setThumbnailImg] = useState<string>();
+  const [localQuizLength, setLocalQuizLength] = useState<number>();
   const [countdownValue, setCountdownValue] = useState<number>(3);
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
   const [timeouts, setTimeouts] = useState<NodeJS.Timeout[]>();
-  const callArtist = async (tempTracksImport: TrackData[]) => {
+
+  const callArtist = async (tempTracksImport: any) => {
     //Generate 10 Random Track Urls
     let quizLength = 10;
     const tracksLength = Object.keys(tempTracksImport).length - 1;
     let randomTrackIndexes: number[] = [];
-    let tempTrackData: any = [];
+    let tempTrackData: TrackData[] = [];
     if (quizLength > tracksLength) quizLength = tracksLength;
     for (let i = 0; i < quizLength; i++) {
       let checkingForDuplicate: boolean = true;
@@ -75,22 +77,29 @@ const QueryID: NextPage = () => {
         Object.entries(nameId).forEach(([name, id]) => {
           if (id === QueryID) tempArtistName = name;
         });
-        const tempTracksImport = await import(
-          `../../../JSON/trackIDtoName/${QueryID}.json`
-        );
+
+        const { data } = await supabase
+          .from(`${QueryID}`)
+          .select("songname, songid");
+
+        const tempTracksImport = {};
+        Object.values(data).forEach((song) => {
+          if (song.songname !== null)
+            tempTracksImport[song.songname] = song.songid;
+        });
+
         const tempThumbnailImg = await import(
           `../../../assets/thumbnails/${QueryID}.jpg`
         );
-
+        setLoading(false);
         setThumbnailImg(tempThumbnailImg.default.src);
         setArtistName(tempArtistName);
-        setLocalTracksImport(tempTracksImport);
-        setLoading(false);
+        setLocalQuizLength(Object.entries(tempTracksImport).length);
         callArtist(tempTracksImport);
       };
       firstCall();
     }
-  }, [router.isReady]);
+  }, []);
 
   useEffect(() => {
     if (showCountdown) {
@@ -117,14 +126,13 @@ const QueryID: NextPage = () => {
       }
     }
   }, [showCountdown]);
-
   return (
     <div className={main.staticContainer}>
       <div className={play.homeArrowContainer} onClick={() => router.push("/")}>
         <img src={leftArrow.src}></img>
         <div className={play.displayNone}>Go Home</div>
       </div>
-      {!loading && (
+      {!loading ? (
         <div className={main.startCard}>
           <div className={main.imgContainer}>
             <img className={main.thumbnailImg} src={thumbnailImg} alt="alt" />
@@ -133,9 +141,7 @@ const QueryID: NextPage = () => {
                 <h1 className={main.header1}>{artistName}</h1>
                 <h3 className={main.header1}>10 Questions</h3>
               </div>
-              <div>
-                {Object.entries(localTracksImport).length} Tracks To Guess From
-              </div>
+              <div>{localQuizLength} Tracks To Guess From</div>
             </div>
           </div>
           <div className={main.btnContainer}>
@@ -179,6 +185,10 @@ const QueryID: NextPage = () => {
             )}
           </div>
           {showCountdown && <h1>Start In: {countdownValue}</h1>}
+        </div>
+      ) : (
+        <div>
+          <img src={loadingSRC.src} alt="" style={{ width: "50px" }}></img>
         </div>
       )}
     </div>

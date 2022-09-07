@@ -26,6 +26,7 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     if (trackData !== undefined) {
+      console.log(trackData);
       setThisTrack(trackData[trackIndex]);
       setLoading(false);
     } else {
@@ -142,7 +143,7 @@ const Play: NextPage = () => {
                   onClick={() =>
                     router.push(
                       `/start/${encodeURIComponent(
-                        "artists"
+                        queryType as string
                       )}/${encodeURIComponent(`${playID}`)}`
                     )
                   }

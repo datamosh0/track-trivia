@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   getTracksData,
   getPlaylistTracks,
@@ -9,88 +9,39 @@ import {
 import { supabase } from "../supabaseClient";
 
 const MyUtil = () => {
-  const artistsObj = {
-    "1dBC3Mxf8j9DINMUu8yKqx": "Kendrick Lamar",
-  };
-  let spotifyLinks = {};
-
   const playlistTracks = async () => {
+    const artistsObj = {
+      // "37i9dQZF1DX0XUsuxWHRQd": "RapCaviar",
+      // "4riovLwMCrY3q0Cd4e0Sqp": "Rap Hits (2010-2022)",
+      "0C2zyPdlkbWHrwVg9gqNdU": "90s rap",
+      // "5yu0PWKz6u2MwuXXtUQUtZ": "2010 Rap Throwbacks",
+      // "0i24Lg9bNOlIjGn9sikDNv": "2000's Hip Hop/Rap hits",
+    };
+
     Object.entries(artistsObj).map(async ([artistID, artistName]) => {
-      let thisSpotifyLinks = [];
-
-      const { items } = await wrapInRetry(getPlaylistTracks, `${artistID}`);
-      const playlistTrackNames = items.map((song: any) => {
-        return song.track.name;
+      const { tracks: items } = await wrapInRetry(
+        getPlaylistTracks,
+        `${artistID}`
+      );
+      const hrefArr = Object.values(items.items).map((item: any) => {
+        return item.track.href;
       });
-      playlistTrackNames.forEach(async (songName) => {
-        let tempSongName = songName.replace(/ /g, "&");
-
-        const res = await wrapInRetry(getTrackIds, {
-          songName: tempSongName,
-          artistName: artistName,
-        });
-        if (res === 0) return;
-        const possibleSongs = res.tracks.items;
-        let theSong;
-        for (const item of possibleSongs) {
-          const artistsNames = item.artists.map((artist) => {
-            return artist.name;
-          });
-
-          if (artistsNames.includes(`${artistName}`)) {
-            theSong = item;
-            break;
-          }
-        }
-
-        if (theSong)
-          thisSpotifyLinks.push(
-            `https://open.spotify.com/track/${theSong.uri.split(":")[2]}`
-          );
+      console.log(hrefArr);
+      const newObj = {};
+      Object.values(items.items).map((item: any) => {
+        newObj[item.track.name] = item.track.id;
       });
-      spotifyLinks[artistID] = thisSpotifyLinks;
-    });
-    console.log(spotifyLinks);
-  };
 
-  const makeJson = async () => {
-    const newObj = {};
-    const artistName = "Kendrick Lamar";
-    const { data } = await supabase.storage
-      .from("audio")
-      .list("2YZyLoL8N0Wb9xBt1NhZWg");
-    console.log(data.length);
-    const trackNames = Object.values(data).map((song: any) => {
-      return song.name.replace(/_/g, " ").replace(".mp3", "");
-    });
-    trackNames.forEach(async (songName) => {
-      let tempSongName = songName.replace(/ /g, "&");
-
-      const res = await wrapInRetry(getTrackIds, {
-        songName: tempSongName,
-        artistName: artistName,
-      });
-      if (res === 0) return;
-      const possibleSongs = res.tracks.items;
-      let theSong;
-      for (const item of possibleSongs) {
-        const artistsNames = item.artists.map((artist) => {
-          return artist.name;
-        });
-
-        if (artistsNames.includes(`${artistName}`)) {
-          theSong = item;
-          break;
-        }
+      for await (const [songName, songID] of Object.entries(newObj)) {
+        const { data, error } = await supabase
+          .from(`${artistID}`)
+          .insert([{ songname: songName, songid: songID }]);
       }
-      if (theSong) newObj[songName] = theSong.uri.split(":")[2];
     });
-    console.log(newObj);
   };
 
   useEffect(() => {
-    // playlistTracks();
-    // makeJson();
+    playlistTracks();
   }, []);
 
   return <div>MyUtil</div>;

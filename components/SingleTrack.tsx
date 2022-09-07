@@ -21,7 +21,7 @@ const SingleTrack = ({
   artistName: string;
 }) => {
   const router = useRouter();
-  const { playID } = router.query;
+  const { playID, queryType } = router.query;
   const [answerOptions, setAnswerOptions] = useState<string[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [correct, setCorrect] = useState<boolean>(false);
@@ -72,9 +72,9 @@ const SingleTrack = ({
             className={play.homeArrowContainer}
             onClick={() =>
               router.push(
-                `/start/${encodeURIComponent("artists")}/${encodeURIComponent(
-                  playID as string
-                )}`
+                `/start/${encodeURIComponent(
+                  queryType as string
+                )}/${encodeURIComponent(playID as string)}`
               )
             }
           >
