@@ -78,10 +78,10 @@ const QueryID: NextPage = () => {
           if (id === QueryID) tempArtistName = name;
         });
 
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from(`${QueryID}`)
           .select("songname, songid");
-
+        console.log(data, error);
         const tempTracksImport = {};
         Object.values(data).forEach((song) => {
           if (song.songname !== null)

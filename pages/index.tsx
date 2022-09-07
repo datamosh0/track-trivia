@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import main from "../styles/Main.module.css";
 import nameId from "../JSON/nameId.json";
-import playlistId from "../JSON/playlistId.json";
+import MyUtil from "../components/MyUtil";
 
 const Home: NextPage = () => {
   return (
@@ -18,31 +18,8 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>Welcome to Track Trivia</h1>
 
         <p className={styles.description}>Test your Music Knowledge</p>
-        {/* <MyUtil></MyUtil> */}
+        <MyUtil></MyUtil>
         <div className={styles.grid}>
-          {/* {Object.entries(playlistId).map(([name, id]) => {
-            const thumbnail = require(`../assets/thumbnails/${id}.jpg`);
-            return (
-              <Link
-                key={id}
-                href={`/start/${encodeURIComponent(
-                  "playlists"
-                )}/${encodeURIComponent(id)}`}
-              >
-                <div className={styles.card}>
-                  <div className={main.thumbnailContainer}>
-                    <img
-                      src={thumbnail.default.src}
-                      className={main.thumbnailImg}
-                      alt=""
-                    ></img>
-                  </div>
-                  <h2 className={main.header3}>{name} &rarr;</h2>
-                  <h4>10 Questions</h4>
-                </div>
-              </Link>
-            );
-          })} */}
           <br></br>
           {Object.entries(nameId).map(([name, id]) => {
             const thumbnail = require(`../assets/thumbnails/${id}.jpg`);

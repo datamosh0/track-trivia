@@ -14,7 +14,7 @@ const MyUtil = () => {
       // "37i9dQZF1DX0XUsuxWHRQd": "RapCaviar",
       // "4riovLwMCrY3q0Cd4e0Sqp": "Rap Hits (2010-2022)",
       // "0C2zyPdlkbWHrwVg9gqNdU": "90s rap",
-      // "5yu0PWKz6u2MwuXXtUQUtZ": "2010 Rap Throwbacks",
+      "5yu0PWKz6u2MwuXXtUQUtZ": "2010 Rap Throwbacks",
       // "0i24Lg9bNOlIjGn9sikDNv": "2000's Hip Hop/Rap hits",
     };
 
@@ -32,11 +32,11 @@ const MyUtil = () => {
         newObj[item.track.name] = item.track.id;
       });
 
-      for await (const [songName, songID] of Object.entries(newObj)) {
-        const { data, error } = await supabase
-          .from(`${artistID}`)
-          .insert([{ songname: songName, songid: songID }]);
-      }
+      // for await (const [songName, songID] of Object.entries(newObj)) {
+      //   const { data, error } = await supabase
+      //     .from(`${artistID}`)
+      //     .insert([{ songname: songName, songid: songID }]);
+      // }
     });
   };
 

@@ -123,7 +123,8 @@ const Visualizer = ({
   }, []);
 
   const changeVolume = () => {
-    const newVolume = parseInt(volumeRef!.current.value);
+    const newVolume = parseFloat(volumeRef.current.value);
+
     audioRef.current.volume = newVolume;
     dispatch(setVolume(newVolume));
     setLocalVolume(newVolume);
