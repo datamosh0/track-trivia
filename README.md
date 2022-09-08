@@ -1,6 +1,6 @@
 Made with Next, Redux, Supabase, Spotify API
 
-# Track Trivia: [Live link here](http://https://track-trivia.vercel.app/)
+# Track Trivia: [Live link here](https://track-trivia.vercel.app/)
 
 ## Music Guessing Game
 
