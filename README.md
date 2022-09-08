@@ -4,7 +4,7 @@ Made with Next, Redux, Supabase, Spotify API
 
 ## Music Guessing Game
 
-![Alt text](/src/assets/ss.png "Track Trivia")
+![Alt text](./assets/ss.png "Track Trivia")
 
 ### Features
 
