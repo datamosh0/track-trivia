@@ -4,7 +4,6 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import main from "../styles/Main.module.css";
 import nameId from "../JSON/nameId.json";
-import MyUtil from "../components/MyUtil";
 
 const Home: NextPage = () => {
   return (
@@ -18,7 +17,7 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>Welcome to Track Trivia</h1>
 
         <p className={styles.description}>Test your Music Knowledge</p>
-        <MyUtil></MyUtil>
+        {/* <MyUtil></MyUtil> */}
         <div className={styles.grid}>
           <br></br>
           {Object.entries(nameId).map(([name, id]) => {

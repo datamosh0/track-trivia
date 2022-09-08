@@ -6,6 +6,7 @@ import main from "../styles/Main.module.css";
 import cancelGame from "../assets/cancelGame.svg";
 import { useRouter } from "next/router";
 import { isMobile } from "react-device-detect";
+import Spotify_icon from "../assets/Spotify_icon.svg.png";
 
 const SingleTrack = ({
   tracksImport,
@@ -127,6 +128,23 @@ const SingleTrack = ({
                         <h3 className={main.header1}>
                           {thisTrack.artistNames[0]}
                         </h3>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <h4>
+                            <a
+                              href={thisTrack.spotify}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              Listen on Spotify
+                            </a>
+                          </h4>
+                          <img
+                            src={Spotify_icon.src}
+                            className={main.header1}
+                            alt=""
+                            style={{ width: "25px", marginLeft: ".5rem" }}
+                          />
+                        </div>
                       </div>
                       <div className={main.btn} onClick={resetTrack}>
                         Continue
