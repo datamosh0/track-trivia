@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Track Trivia: [Live link here](https://track-trivia.vercel.app/)
 
 Track trivia is a music guessing game inspired from a viral tiktok trend with a simple concept. Name a song from just the intro to prove your musical knowledge.
@@ -10,13 +11,42 @@ Pick an artist, listen to the first 10 seconds of a song, if you guess it correc
 
 ### Features
 
+=======
+
+# Track Trivia: [Live link here](https://track-trivia.vercel.app/)
+
+  
+Track trivia is a music guessing game inspired from a viral tiktok trend with a simple concept. Name a song from just the intro to prove your musical knowledge. 
+
+
+## How it works:
+
+Pick an artist, listen to the first 10 seconds of a song, if you guess it correctly you get a point!
+
+  
+  
+
+  
+
+![Alt text](./assets/ss.png  "Track Trivia")
+
+  
+
+### Features
+
+  
+>>>>>>> da9c6baf98fab7602be580001e2cb46ee126dbbe
 - Shows High Scores and games played
 
 - Audio Visualization with HTML Canvas
 
 - Spotify links integrated
 
+  
+
 ### Technologies Used
+
+  
 
 - NextJS
 
@@ -31,6 +61,7 @@ Pick an artist, listen to the first 10 seconds of a song, if you guess it correc
 - SQL
 
 - Spotify API
+<<<<<<< HEAD
 -
 
 ## To Run Locally:
@@ -38,3 +69,10 @@ Pick an artist, listen to the first 10 seconds of a song, if you guess it correc
 1. run ` git clone https://github.com/datamosh0/track-trivia.git`
 2. run ` npm install` from the project file
 3. run `npm run dev`
+=======
+- 
+## To Run Locally:
+1. run ``` git clone https://github.com/datamosh0/track-trivia.git```
+2. run ``` npm install``` from the project file
+3. run ``` npm run dev ```
+>>>>>>> da9c6baf98fab7602be580001e2cb46ee126dbbe
