@@ -28,7 +28,13 @@ const QueryID: NextPage = () => {
   const [showCountdown, setShowCountdown] = useState<boolean>(false);
   const [timeouts, setTimeouts] = useState<NodeJS.Timeout[]>();
 
-  const callArtist = async (tempTracksImport: any) => {
+  const callArtist = async (tempArtistName: string) => {
+    const tempTracksImport = await wrapInRetry(makeTempTrackImports, {
+      artistName: tempArtistName,
+      queryID: QueryID,
+    });
+    console.log(artistName);
+
     //Generate 10 Random Track Urls
     let quizLength = 10;
     const tracksLength = Object.keys(tempTracksImport).length - 1;
@@ -70,6 +76,7 @@ const QueryID: NextPage = () => {
         }
       }
     }
+    console.log(tempTracksImport);
     dispatch(setTracksImport(tempTracksImport));
     dispatch(setTrackData(tempTrackData));
   };
@@ -78,23 +85,22 @@ const QueryID: NextPage = () => {
     if (router.isReady) {
       const firstCall = async () => {
         let tempArtistName: string;
+        let tempQuizLength: number;
         Object.entries(nameId).forEach(([name, id]) => {
-          if (id === QueryID) tempArtistName = name;
-        });
-
-        const tempTracksImport = await wrapInRetry(makeTempTrackImports, {
-          artistName: tempArtistName,
-          queryID: QueryID,
+          if (id[0] === QueryID) {
+            tempArtistName = name;
+            tempQuizLength = id[1] as number;
+          }
         });
 
         const tempThumbnailImg = await import(
           `../../../assets/thumbnails/${QueryID}.jpg`
         );
-        setLoading(false);
         setThumbnailImg(tempThumbnailImg.default.src);
         setArtistName(tempArtistName);
-        setLocalQuizLength(Object.entries(tempTracksImport).length);
-        callArtist(tempTracksImport);
+        setLocalQuizLength(tempQuizLength);
+        setLoading(false);
+        callArtist(tempArtistName);
       };
       firstCall();
     }

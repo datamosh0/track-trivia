@@ -21,13 +21,13 @@ const Home: NextPage = () => {
         <div className={styles.grid}>
           <br></br>
           {Object.entries(nameId).map(([name, id]) => {
-            const thumbnail = require(`../assets/thumbnails/${id}.jpg`);
+            const thumbnail = require(`../assets/thumbnails/${id[0]}.jpg`);
             return (
               <Link
-                key={id}
+                key={id[0]}
                 href={`/start/${encodeURIComponent(
                   "artists"
-                )}/${encodeURIComponent(id)}`}
+                )}/${encodeURIComponent(id[0])}`}
               >
                 <div className={styles.card}>
                   <div className={main.thumbnailContainer}>
