@@ -4,6 +4,36 @@ import { setToken } from "../app/token";
 import store from "../app/store";
 import { supabase } from "../supabaseClient";
 
+export const makeTempTrackImports = async ({ artistName, queryID }) => {
+  const { data } = await supabase.storage.from("audio").list(queryID);
+  const trackNames = Object.values(data).map((song) => {
+    return song.name.replace(/_/g, "%20").replace(".mp3", "");
+  });
+  const results = await Promise.all(
+    trackNames.map(async (songName) => {
+      return await wrapInRetry(getTrackIds, { songName, artistName });
+    })
+  );
+  const newObj = [];
+  const filteredResults = results.filter((result) => {
+    if (result.tracks !== undefined || result.tracks !== 0) return result;
+  });
+  filteredResults.forEach((possibleSongs) => {
+    for (const song of possibleSongs.tracks.items) {
+      const includesArtist = song.artists
+        .map((artist) => {
+          return artist.name;
+        })
+        .includes(`${artistName}`);
+      if (includesArtist) {
+        newObj[song.name] = song.id;
+        break;
+      }
+    }
+  });
+  return newObj;
+};
+
 export const getAccessToken = async () => {
   var clientSecret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
   var clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
@@ -123,54 +153,3 @@ export const shuffle = (array) => {
 
   return array;
 };
-
-//did not work
-
-// export const makeTempTrackImports = async (artistName, queryID) => {
-//   const { data } = await supabase.storage.from("audio").list(queryID);
-//   const trackNames = Object.values(data).map((song) => {
-//     return song.name.replace(/_/g, " ").replace(".mp3", "");
-//   });
-//   let newObj = {};
-//   let results = [];
-//   for await (const songName of trackNames) {
-//     let tempSongName = songName.replace(/ /g, "&");
-
-//     const res = await wrapInRetry(getTrackIds, {
-//       songName: tempSongName,
-//       artistName: artistName,
-//     });
-//     if (res === 0 || res === undefined) return;
-//     results.push(res.tracks.items);
-//   }
-//   return results;
-// };
-
-// [QueryID].tsx:
-// let tempTracksImport;
-// try {
-//   await Promise.resolve(
-//     makeTempTrackImports(artistName, QueryID).then((tempTracks) => {
-//       const newSongs = [];
-//       console.log(tempTracks);
-//       tempTracks.forEach((possibleSongs) => {
-//         for (const song of possibleSongs) {
-//           const includesArtist = song.artists
-//             .map((artist) => {
-//               return artist.name;
-//             })
-//             .includes(`${artistName}`);
-//           console.log(includesArtist);
-//           if (includesArtist) {
-//             console.log(song);
-//             newSongs.push(song);
-//             break;
-//           }
-//         }
-//       });
-//       console.log(newSongs);
-//     })
-//   );
-// } catch (e) {
-//   console.log(e);
-// }

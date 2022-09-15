@@ -37,8 +37,10 @@ const Home: NextPage = () => {
                       alt=""
                     ></img>
                   </div>
-                  <h2 className={main.header3}>{name} &rarr;</h2>
-                  <h4>10 Questions</h4>
+                  <div className={styles.cardHeaders}>
+                    <h2 className={main.header3}>{name} &rarr;</h2>
+                    <h4>10 Questions</h4>
+                  </div>
                 </div>
               </Link>
             );

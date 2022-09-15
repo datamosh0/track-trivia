@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { getTracksData, wrapInRetry } from "../../../components/call";
+import {
+  getTracksData,
+  wrapInRetry,
+  makeTempTrackImports,
+} from "../../../components/call";
 import { useEffect } from "react";
 import { supabase } from "../../../supabaseClient";
 import main from "../../../styles/Main.module.css";
@@ -78,14 +82,9 @@ const QueryID: NextPage = () => {
           if (id === QueryID) tempArtistName = name;
         });
 
-        const { data, error } = await supabase
-          .from(`${QueryID}`)
-          .select("songname, songid");
-        console.log(data, error);
-        const tempTracksImport = {};
-        Object.values(data).forEach((song) => {
-          if (song.songname !== null)
-            tempTracksImport[song.songname] = song.songid;
+        const tempTracksImport = await wrapInRetry(makeTempTrackImports, {
+          artistName: tempArtistName,
+          queryID: QueryID,
         });
 
         const tempThumbnailImg = await import(
