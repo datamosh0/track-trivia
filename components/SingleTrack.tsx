@@ -95,12 +95,15 @@ const SingleTrack = ({
             <div>
               {!showAnswer ? (
                 <div className={play.playContainer}>
-                  {answerOptions.map((answer: string) => {
+                  {answerOptions.map((answer: string, index: number) => {
+                    let isCorrect = answer === thisTrack.name;
+                    console.log(isCorrect);
                     return (
                       <div
                         className={play.playBtn}
                         key={answer}
                         onClick={() => checkAnswer(answer)}
+                        data-cy={isCorrect ? "correct" : `wrong${index}`}
                       >
                         {answer}
                       </div>
@@ -146,7 +149,11 @@ const SingleTrack = ({
                           />
                         </div>
                       </div>
-                      <div className={main.btn} onClick={resetTrack}>
+                      <div
+                        className={main.btn}
+                        onClick={resetTrack}
+                        data-cy="continue"
+                      >
                         Continue
                       </div>
                     </div>

@@ -4,20 +4,17 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import main from "../styles/Main.module.css";
 import nameId from "../JSON/nameId.json";
-
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
         <title>TRACK TRIVIA - MUSIC QUIZ</title>
-        <meta name="description" content="TRACK TRIVIA MUSIC QUIZ" />
+        <meta name="Track Trivia" content="TRACK TRIVIA MUSIC QUIZ" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to Track Trivia</h1>
-
         <p className={styles.description}>Test your Music Knowledge</p>
-        {/* <MyUtil></MyUtil> */}
         <div className={styles.grid}>
           <br></br>
           {Object.entries(nameId).map(([name, id]) => {
@@ -29,7 +26,7 @@ const Home: NextPage = () => {
                   "artists"
                 )}/${encodeURIComponent(id[0])}`}
               >
-                <div className={styles.card}>
+                <div className={styles.card} data-cy={name}>
                   <div className={main.thumbnailContainer}>
                     <img
                       src={thumbnail.default.src}

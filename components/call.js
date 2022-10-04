@@ -4,7 +4,7 @@ import { setToken } from "../app/token";
 import store from "../app/store";
 import { supabase } from "../supabaseClient";
 
-export const makeTempTrackImports = async ({ artistName, queryID }) => {
+export const makeTempTrackImports = async ({ artistName, queryID }, token) => {
   const { data } = await supabase.storage.from("audio").list(queryID);
   const trackNames = Object.values(data).map((song) => {
     return song.name.replace(/_/g, "%20").replace(".mp3", "");

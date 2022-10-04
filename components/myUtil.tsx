@@ -7,7 +7,7 @@ import {
   wrapInRetry,
 } from "./call";
 import { supabase } from "../supabaseClient";
-
+import { makeTempTrackImports } from "./call";
 const MyUtil = () => {
   const playlistTracks = async () => {
     const artistsObj = {
@@ -19,18 +19,23 @@ const MyUtil = () => {
     };
 
     Object.entries(artistsObj).map(async ([artistID, artistName]) => {
-      const { tracks: items } = await wrapInRetry(
-        getPlaylistTracks,
-        `${artistID}`
-      );
-      const hrefArr = Object.values(items.items).map((item: any) => {
-        return item.track.href;
+      // const { tracks: items } = await wrapInRetry(
+      //   getPlaylistTracks,
+      //   `${artistID}`
+      // );
+      // const hrefArr = Object.values(items.items).map((item: any) => {
+      //   return item.track.href;
+      // });
+      // const newObj = {};
+      // Object.values(items.items).map((item: any) => {
+      //   newObj[item.track.name] = item.track.id;
+      // });
+
+      const tempTracksImport = await wrapInRetry(makeTempTrackImports, {
+        artistName: "Kanye West",
+        queryID: "5K4W6rqBFWDnAN6FQUkS6x",
       });
-      console.log(hrefArr);
-      const newObj = {};
-      Object.values(items.items).map((item: any) => {
-        newObj[item.track.name] = item.track.id;
-      });
+      console.log(tempTracksImport);
 
       // for await (const [songName, songID] of Object.entries(newObj)) {
       //   const { data, error } = await supabase

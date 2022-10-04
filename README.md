@@ -22,12 +22,15 @@ Pick an artist, listen to the first 10 seconds of a song, if you guess it correc
 
 - HTML Cavnas - Audio Visualization
 
+- Cypress - End to End testing
+
 ### Features
 
 - Shows High Scores and games played
 - Audio Visualization with HTML Canvas
 - Share buttons
 - Spotify links integrated
+- End to End Testing
 
 Features I would like to add
 

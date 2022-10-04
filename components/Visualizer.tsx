@@ -80,11 +80,15 @@ const Visualizer = ({
       };
 
       audioRef.current.volume = localVolume;
-      audio.play();
+      try {
+        audio.play();
+      } catch (e) {}
       renderFrame();
       let myTimeout = setTimeout(() => {
-        audio.pause();
-        setShowResetButton(true);
+        try {
+          audio.pause();
+          setShowResetButton(true);
+        } catch (e) {}
       }, 10000);
       setLoading(false);
       setShowListenBtn(false);
@@ -98,10 +102,12 @@ const Visualizer = ({
   };
 
   useEffect(() => {
-    if (showAnswer === true) {
+    if (showAnswer === true && localAudio) {
       if (localAudio.paused) {
         localAudio.currentTime = 10;
-        localAudio.play();
+        try {
+          localAudio.play();
+        } catch (e) {}
       } else {
         clearTimeout(localTimeout);
       }
@@ -172,7 +178,7 @@ const Visualizer = ({
             </div>
           )}
           <canvas ref={canvasRef}></canvas>
-          <audio ref={audioRef}></audio>
+          <audio ref={audioRef} data-cy="audioRef"></audio>
         </div>
         {!loading && (
           <div>

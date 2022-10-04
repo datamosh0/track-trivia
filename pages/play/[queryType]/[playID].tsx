@@ -26,7 +26,6 @@ const Play: NextPage = () => {
 
   useEffect(() => {
     if (trackData !== undefined) {
-      console.log(trackData);
       setThisTrack(trackData[trackIndex]);
       setLoading(false);
     } else {
@@ -53,7 +52,7 @@ const Play: NextPage = () => {
     let tempArtistName: string = "";
     const firstCall = async () => {
       Object.entries(nameId).forEach(([name, id]) => {
-        if (id === playID) tempArtistName = name;
+        if (id[0] === playID) tempArtistName = name;
       });
       const tempThumbnailImg = await import(
         `../../../assets/thumbnails/${playID}.jpg`
@@ -150,7 +149,11 @@ const Play: NextPage = () => {
                 >
                   Replay
                 </div>
-                <div className={main.btn} onClick={() => router.push("/")}>
+                <div
+                  className={main.btn}
+                  onClick={() => router.push("/")}
+                  data-cy="homeBtn"
+                >
                   Home
                 </div>
               </div>

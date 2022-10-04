@@ -33,7 +33,6 @@ const QueryID: NextPage = () => {
       artistName: tempArtistName,
       queryID: QueryID,
     });
-    console.log(artistName);
 
     //Generate 10 Random Track Urls
     let quizLength = 10;
@@ -76,7 +75,6 @@ const QueryID: NextPage = () => {
         }
       }
     }
-    console.log(tempTracksImport);
     dispatch(setTracksImport(tempTracksImport));
     dispatch(setTrackData(tempTrackData));
   };
@@ -133,7 +131,11 @@ const QueryID: NextPage = () => {
   }, [showCountdown]);
   return (
     <div className={main.staticContainer}>
-      <div className={play.homeArrowContainer} onClick={() => router.push("/")}>
+      <div
+        className={play.homeArrowContainer}
+        onClick={() => router.push("/")}
+        data-cy="goHomeBtn"
+      >
         <img src={leftArrow.src}></img>
         <div className={play.displayNone}>Go Home</div>
       </div>
@@ -184,7 +186,11 @@ const QueryID: NextPage = () => {
                 Stop
               </div>
             ) : (
-              <div className={main.btn} onClick={() => setShowCountdown(true)}>
+              <div
+                className={main.btn}
+                onClick={() => setShowCountdown(true)}
+                data-cy="playBtn"
+              >
                 Play
               </div>
             )}
